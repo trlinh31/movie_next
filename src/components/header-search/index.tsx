@@ -1,5 +1,9 @@
-import React from "react";
+import { Input } from "@/components/ui/input";
 
 export default function HeaderSearch() {
-  return <div></div>;
+  return (
+    <div>
+      <Input placeholder='Tìm kiếm' />
+    </div>
+  );
 }
