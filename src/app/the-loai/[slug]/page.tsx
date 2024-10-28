@@ -24,7 +24,7 @@ export default function CategoryPage({ params }: { params: { slug: string } }) {
 
   return (
     <div className='container py-[5rem] md:py-[7rem]'>
-      <BreadcrumbComponent title={data?.data.breadCrumb[0].name} />
+      <BreadcrumbComponent title={data?.data.breadCrumb[0].name} subtitle='Thể loại' />
       <div className='grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-x-4 gap-y-8'>
         {data?.data.items.map((item) => (
           <Movie key={item._id} data={item} />

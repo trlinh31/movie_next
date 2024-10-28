@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import Loading from "@/app/loading";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -7,17 +8,34 @@ import useFetchData from "@/hooks/useFetchData";
 import { MovieDetail } from "@/types/MovieDetail";
 import { Calendar, Eye, Play } from "lucide-react";
 import Link from "next/link";
+import VideoModal from "@/components/video-modal";
+import toast from "react-hot-toast";
 
-export default function MoviePage({ params }: { params: { slug: string } }) {
+export default function MovieDetailPage({ params }: { params: { slug: string } }) {
   const { data, loading } = useFetchData<MovieDetail>(`/phim/${params.slug}`);
+  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [embedUrl, setEmbedUrl] = useState<string | null>(null);
+
+  useEffect(() => {
+    document.title = data?.data.seoOnPage.titleHead || "Phim 1080";
+  }, [data]);
 
   if (loading) {
     return <Loading />;
   }
 
+  const onShowModalTrailer = (url: string) => {
+    if (!url) {
+      return toast.error("Oops! Không tìm thấy trailer phim.");
+    }
+
+    setEmbedUrl(url);
+    setIsOpen(true);
+  };
+
   return (
     <>
-      <div className='relative h-[70vh] overflow-hidden'>
+      <div className='relative h-[60vh] md:h-[70vh] overflow-hidden'>
         <div className='blur-[1rem] brightness-50 absolute top-0 left-0 right-0 bottom-0 w-full h-full z-0 transition-opacity'>
           <img src={data?.data.seoOnPage.seoSchema.image} className='w-full h-full object-cover' loading='lazy' alt={data?.data.item.name} />
         </div>
@@ -50,7 +68,7 @@ export default function MoviePage({ params }: { params: { slug: string } }) {
                   </Badge>
                 ))}
               </div>
-              <ul className='space-y-2'>
+              <ul className='space-y-2 hidden md:block'>
                 <li>
                   Diễn viên:{" "}
                   {data?.data.item.actor.map((item, index) => (
@@ -88,14 +106,12 @@ export default function MoviePage({ params }: { params: { slug: string } }) {
                   Trạng thái: <span className='text-slate-400'>{data?.data.item.episode_current}</span>
                 </li>
               </ul>
-              {data?.data.item.status !== "trailer" && (
-                <div className='!mt-8'>
-                  <Button size={"lg"} variant={"destructive"}>
-                    <Play size={30} />
-                    <span>Xem ngay</span>
-                  </Button>
-                </div>
-              )}
+              <div className='!mt-8'>
+                <Button size={"lg"} variant={"destructive"} onClick={() => onShowModalTrailer(data?.data.item.trailer_url || "")}>
+                  <Play size={30} />
+                  <span>Trailer</span>
+                </Button>
+              </div>
             </div>
           </div>
           <div className='col-span-1 h-full pt-32 flex items-start justify-end'>
@@ -109,27 +125,64 @@ export default function MoviePage({ params }: { params: { slug: string } }) {
         </div>
       </div>
       <div className='container py-6'>
-        <div className='space-y-4'>
+        <div className='space-y-8'>
+          <ul className='space-y-2 md:hidden block'>
+            <li>
+              Diễn viên:{" "}
+              {data?.data.item.actor.map((item, index) => (
+                <span key={index} className='text-slate-400'>
+                  {item}
+                  {index < data.data.item.actor.length - 1 && ", "}
+                </span>
+              ))}
+            </li>
+            <li>
+              Đạo diễn:{" "}
+              {data?.data.item.director.map((item, index) => (
+                <span key={index} className='text-slate-400'>
+                  {item}
+                  {index < data.data.item.director.length - 1 && ", "}
+                </span>
+              ))}
+            </li>
+            <li>
+              Quốc gia: <span className='text-slate-400'>{data?.data.item.country[0].name}</span>
+            </li>
+            <li>
+              Thể loại:{" "}
+              {data?.data.item.category.map((item, index) => (
+                <span key={index} className='text-slate-400'>
+                  {item.name}
+                  {index < data.data.item.category.length - 1 && ", "}
+                </span>
+              ))}
+            </li>
+            <li>
+              Thời lượng: <span className='text-slate-400'>{data?.data.item.time}</span>
+            </li>
+            <li>
+              Trạng thái: <span className='text-slate-400'>{data?.data.item.episode_current}</span>
+            </li>
+          </ul>
           <div>
-            <h2 className='text-2xl font-bold pb-4'>Nội dung phim</h2>
+            <h2 className='text-2xl font-bold pb-2'>Nội dung phim</h2>
             <div className='text-base text-slate-400' dangerouslySetInnerHTML={{ __html: data?.data.item.content || "" }}></div>
           </div>
+
           <div>
             <h2 className='text-2xl font-bold pb-4'>Danh sách tập</h2>
             <div className='flex flex-wrap gap-4'>
-              {data?.data.item.status === "trailer" ? (
-                <Button variant={"secondary"}>Trailer</Button>
-              ) : (
-                data?.data.item.episodes[0].server_data.map((item) => (
-                  <Button key={item.slug} variant={"outline"} asChild>
-                    <Link href={`/phim/${data.data.item.slug}/${item.slug}`}>{`Tập ${item.name}`}</Link>
-                  </Button>
-                ))
-              )}
+              {data?.data.item.episodes[0].server_data.map((item) => (
+                <Button key={item.name} variant={"outline"} asChild>
+                  <Link href={`/phim/${data.data.item.slug}/tap-${item.name}`}>{`Tập ${item.name}`}</Link>
+                </Button>
+              ))}
             </div>
           </div>
         </div>
       </div>
+
+      {embedUrl && isOpen && <VideoModal embedUrl={embedUrl} isOpen={isOpen} setOpen={setIsOpen} />}
     </>
   );
 }

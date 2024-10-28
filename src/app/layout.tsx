@@ -4,6 +4,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import "swiper/css";
 import "swiper/css/pagination";
+import { Toaster } from "react-hot-toast";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -25,6 +26,7 @@ export default function RootLayout({
       <body className={`${inter.className} dark`}>
         <Header />
         <main>{children}</main>
+        <Toaster />
       </body>
     </html>
   );
