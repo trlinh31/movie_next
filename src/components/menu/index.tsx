@@ -9,7 +9,7 @@ export default function Menu() {
 
   return (
     <nav>
-      <ul className='flex'>
+      <ul className='md:flex hidden'>
         <li className='relative font-bold px-6 py-4 cursor-pointer group'>
           Thể loại
           {data && (
@@ -25,13 +25,19 @@ export default function Menu() {
           )}
         </li>
         <li className='font-bold px-6 py-4 cursor-pointer hover:text-red-500'>
-          <Link href='/phim-moi-nhat'>Phim mới nhất</Link>
+          <Link href='/danh-sach/phim-moi-nhat'>Phim mới nhất</Link>
         </li>
         <li className='font-bold px-6 py-4 cursor-pointer hover:text-red-500'>
-          <Link href='/phim-bo'>Phim bộ</Link>
+          <Link href='/danh-sach/phim-le'>Phim lẻ</Link>
         </li>
         <li className='font-bold px-6 py-4 cursor-pointer hover:text-red-500'>
-          <Link href='/phim-le'>Phim lẻ</Link>
+          <Link href='/danh-sach/phim-bo'>Phim bộ</Link>
+        </li>
+        <li className='font-bold px-6 py-4 cursor-pointer hover:text-red-500'>
+          <Link href='/danh-sach/tv-shows'>TV Shows</Link>
+        </li>
+        <li className='font-bold px-6 py-4 cursor-pointer hover:text-red-500'>
+          <Link href='/danh-sach/phim-sap-chieu'>Sắp chiếu</Link>
         </li>
       </ul>
     </nav>

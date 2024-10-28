@@ -6,17 +6,27 @@ class MovieApi extends BaseApi {
     super();
   }
 
-  static getNewUpdateMovies = async (page = 1, year = 2024): Promise<Movie | null> => {
-    return await this.get(`/danh-sach/phim-moi-cap-nhat?sort_field=modified.time&page=${page}&year=${year}`);
-  };
+  static async getMoviesByType(
+    endpoint: string,
+    options: { page?: number; year?: number; category?: string; country?: string } = {}
+  ): Promise<Movie | null> {
+    const params = {
+      sort_field: "modified.time",
+      page: options.page ?? 1,
+      year: options.year ?? "",
+      category: options.category ?? "",
+      country: options.country ?? "",
+    };
 
-  static getNewMovies = async (page = 1, year = 2024, country: string = ""): Promise<Movie | null> => {
-    return await this.get(`/danh-sach/phim-moi?sort_field=modified.time&page=${page}&year=${year}&country=${country}`);
-  };
+    const urlParams = new URLSearchParams();
+    for (const [key, value] of Object.entries(params)) {
+      if (value !== undefined && value !== "") {
+        urlParams.append(key, String(value));
+      }
+    }
 
-  static getUpcomingMovies = async (page = 1): Promise<Movie | null> => {
-    return await this.get(`/danh-sach/phim-sap-chieu?sort_field=modified.time&page=${page}`);
-  };
+    return await this.get(`${endpoint}?${urlParams.toString()}`);
+  }
 }
 
 export default MovieApi;

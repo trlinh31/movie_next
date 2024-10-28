@@ -16,6 +16,8 @@ class BaseApi {
         throw new Error("Failed to fetch data");
       }
 
+      console.log(`${this.baseUrl}${url}`);
+
       const result = await response.json();
 
       return result;
