@@ -35,12 +35,12 @@ export default function MovieDetailPage({ params }: { params: { slug: string } }
 
   return (
     <>
-      <div className='relative h-[60vh] md:h-[70vh] overflow-hidden'>
+      <div className='relative h-[40vh] md:h-[70vh] overflow-hidden'>
         <div className='blur-[1rem] brightness-50 absolute top-0 left-0 right-0 bottom-0 w-full h-full z-0 transition-opacity'>
           <img src={data?.data.seoOnPage.seoSchema.image} className='w-full h-full object-cover' loading='lazy' alt={data?.data.item.name} />
         </div>
         <div className='absolute top-0 left-0 right-0 bottom-0 w-full h-full grid grid-cols-3 grid-rows-1 gap-x-2 container'>
-          <div className='col-span-2 h-full pt-32'>
+          <div className='col-span-2 h-full mt-24 md:pt-32'>
             <div className='text-left space-y-4'>
               <div>
                 <h1 className='text-lg lg:text-4xl font-bold md:mb-2 line-clamp-2'>{data?.data.item.name}</h1>
@@ -62,8 +62,8 @@ export default function MovieDetailPage({ params }: { params: { slug: string } }
                 </div>
               </div>
               <div className='flex gap-x-2 items-center'>
-                {data?.data.item.category.map((item) => (
-                  <Badge key={item.id} variant={"secondary"} className='rounded-sm'>
+                {data?.data.item.category.map((item, index) => (
+                  <Badge key={index} variant={"secondary"} className='rounded-sm'>
                     {item.name}
                   </Badge>
                 ))}
@@ -114,7 +114,7 @@ export default function MovieDetailPage({ params }: { params: { slug: string } }
               </div>
             </div>
           </div>
-          <div className='col-span-1 h-full pt-32 flex items-start justify-end'>
+          <div className='col-span-1 h-full mt-24 md:pt-32 flex items-start justify-end'>
             <img
               src={data?.data.seoOnPage.seoSchema.image}
               loading='lazy'
@@ -172,8 +172,8 @@ export default function MovieDetailPage({ params }: { params: { slug: string } }
           <div>
             <h2 className='text-2xl font-bold pb-4'>Danh sách tập</h2>
             <div className='flex flex-wrap gap-4'>
-              {data?.data.item.episodes[0].server_data.map((item) => (
-                <Button key={item.name} variant={"outline"} asChild>
+              {data?.data.item.episodes[0].server_data.map((item, index) => (
+                <Button key={index} variant={"outline"} asChild>
                   <Link href={`/phim/${data.data.item.slug}/tap-${item.name}`}>{`Tập ${item.name}`}</Link>
                 </Button>
               ))}

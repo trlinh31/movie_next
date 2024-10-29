@@ -27,6 +27,10 @@ class MovieApi extends BaseApi {
 
     return await this.get(`${endpoint}?${urlParams.toString()}`);
   }
+
+  static async searchMovies(query: string): Promise<Movie | null> {
+    return await this.get(`/tim-kiem?keyword=${query}`);
+  }
 }
 
 export default MovieApi;

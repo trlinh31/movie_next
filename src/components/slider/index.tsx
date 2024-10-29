@@ -57,9 +57,11 @@ export default function Slider({ data }: { data: Movie | null }) {
                           </div>
                         </div>
                         <div className='!mt-8 md:!mt-12'>
-                          <Button size={"lg"} variant={"destructive"}>
-                            <Play size={30} />
-                            <span>Xem ngay</span>
+                          <Button size={"lg"} variant={"destructive"} asChild>
+                            <Link href={`/phim/${item.slug}`}>
+                              <Play size={30} />
+                              <span>Xem ngay</span>
+                            </Link>
                           </Button>
                         </div>
                       </div>

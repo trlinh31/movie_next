@@ -1,7 +1,5 @@
 "use client";
 
-import Loading from "@/app/loading";
-import SkeletonMovie from "@/components/skeleton-movie";
 import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Item } from "@/types/Movie";
@@ -20,15 +18,15 @@ export default function Movie({ data }: { data: Item }) {
     <>
       <div>
         <Link href={`/phim/${data.slug}`}>
-          <div className='relative w-full max-h-[320px] h-[320px] overflow-hidden rounded-sm'>
-            <div className='relative w-full h-full'>
-              {!isLoaded && <Skeleton className='w-[220px] max-w-full h-full' />}
+          <div className='relative w-full max-w-[230px] h-[320px] max-h-[320px] overflow-hidden rounded-sm'>
+            <div className='w-full h-full'>
+              {!isLoaded && <Skeleton className='w-full h-full' />}
               <Image
                 src={`${process.env.NEXT_PUBLIC_URL_IMAGE}/uploads/movies/${data.thumb_url}`}
                 className={`w-full h-full object-cover transition-opacity duration-300 ${isLoaded ? "opacity-100" : "opacity-0"}`}
                 width={230}
                 height={320}
-                onLoadingComplete={handleImageLoad}
+                onLoad={handleImageLoad}
                 loading='lazy'
                 alt={data.name}
               />
