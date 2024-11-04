@@ -35,7 +35,7 @@ export default function MovieDetailPage({ params }: { params: { slug: string } }
 
   return (
     <>
-      <div className='relative h-[40vh] md:h-[70vh] overflow-hidden'>
+      <div className='relative h-[50vh] md:h-[80vh] overflow-hidden'>
         <div className='blur-[1rem] brightness-50 absolute top-0 left-0 right-0 bottom-0 w-full h-full z-0 transition-opacity'>
           <img src={data?.data.seoOnPage.seoSchema.image} className='w-full h-full object-cover' loading='lazy' alt={data?.data.item.name} />
         </div>
