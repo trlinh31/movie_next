@@ -1,4 +1,4 @@
-import BaseApi from "@/api/BaseApi";
+import BaseApi from "@/apiRequest/BaseApi";
 import { Movie } from "@/types/Movie";
 
 class MovieApi extends BaseApi {

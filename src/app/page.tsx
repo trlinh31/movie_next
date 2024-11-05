@@ -1,4 +1,4 @@
-import MovieApi from "@/api/Movie";
+import MovieApi from "@/apiRequest/Movie";
 import MovieList from "@/components/movie-list";
 import Slider from "@/components/slider";
 import { MOVIE_ENDPOINTS } from "@/constants/endpoints";

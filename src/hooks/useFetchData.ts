@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import BaseApi from "@/api/BaseApi";
+import BaseApi from "@/apiRequest/BaseApi";
 
 function useFetchData<T>(url: string) {
   const [data, setData] = useState<T | null>(null);

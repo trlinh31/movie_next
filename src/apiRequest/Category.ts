@@ -1,4 +1,4 @@
-import BaseApi from "@/api/BaseApi";
+import BaseApi from "@/apiRequest/BaseApi";
 import { Category } from "@/types/Category";
 
 class CategoryApi extends BaseApi {

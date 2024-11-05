@@ -1,6 +1,6 @@
 "use client";
 
-import MovieApi from "@/api/Movie";
+import MovieApi from "@/apiRequest/Movie";
 import { Input } from "@/components/ui/input";
 import useDebounce from "@/hooks/useDebounce";
 import { Item, Movie } from "@/types/Movie";
